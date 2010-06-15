@@ -17,7 +17,11 @@ module GreenRiver #:nodoc:
           []
         when 1
           result_size = count(options)
-          find(:first, options.merge(:offset => random_index(result_size)))
+          if result_size > 0
+            find(:first, options.merge(:offset => random_index(result_size)))
+          else
+            nil
+          end
         else
           options[:select] = options[:joins].blank? ? primary_key : (quoted_table_name + '.' + primary_key)
           options.delete(:limit)
